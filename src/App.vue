@@ -1,68 +1,65 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <template>
   <div id="app" class="container py-4">
     <div class="row">
-      <!-- 商品列表區 -->
-      <div class="col-md-8">
-        <h2 class="mb-3">商品列表</h2>
-        <div class="row">
-          <div class="col-md-4 mb-4">
-            <div class="card h-100">
-              <img
-                src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&amp;w=2065&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                class="card-img-top"
-              />
-              <div class="card-body">
-                <h5 class="card-title">耳罩式藍牙耳機</h5>
-                <p class="card-text">舒適配戴，支援降噪技術</p>
-                <p class="fw-bold text-primary">$ 2490</p>
-                <button class="btn btn-success w-100">加入購物車</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 購物車區 -->
-      <div class="col-md-4">
-        <h2 class="mb-3">購物車</h2>
-        <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="my-0">時尚藍牙耳機</h6>
-              <small class="text-muted">數量：1</small>
-            </div>
-            <div>
-              <span class="text-muted">$7990</span>
-              <button class="btn btn-sm btn-outline-danger ms-2">移除</button>
-            </div>
-          </li>
-        </ul>
-      </div>
+      <!-- 商品列表區 ProductList.vue -->
+      <ProductList :products="products" />
+      <!-- 購物車區 Cart.vue -->
+      <Cart />
     </div>
 
-    <!-- 通知元件 -->
-    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
-      <div class="toast show align-items-center text-white bg-success border-0">
-        <div class="d-flex">
-          <div class="toast-body">這是通知訊息</div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto"></button>
-        </div>
-      </div>
-    </div>
+    <!-- 通知元件 Notification.vue -->
+    <Notification />
   </div>
 </template>
 
-<style scoped>
-body {
-  background: #f2f2f2f2;
-}
+<style scoped></style>
+<script setup>
+import { ref } from 'vue'
+import { RouterLink, RouterView } from 'vue-router'
+import ProductList from './components/ProductList.vue'
+import Cart from './components/Cart.vue'
+import Notification from './components/Notification.vue'
 
-.card-img-top {
-  height: 150px;
-  object-fit: cover;
-}
-</style>
+const products = ref([
+  {
+    id: 1,
+    name: '耳罩式藍牙耳機',
+    description: '舒適配戴，支援降噪技術',
+    price: 2490,
+    image:
+      'https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=2065&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    id: 4,
+    name: '耳罩式彩虹耳機',
+    description: '舒適配戴，支援降噪技術',
+    price: 1380,
+    image:
+      'https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    id: 5,
+    name: '時尚藍牙耳機',
+    description: '舒適配戴，支援降噪技術',
+    price: 7990,
+    image:
+      'https://images.unsplash.com/photo-1628116709703-c1c9ad550d36?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    id: 2,
+    name: '機械式鍵盤',
+    description: '紅軸機械鍵盤，打字手感極佳',
+    price: 1890,
+    image:
+      'https://images.unsplash.com/photo-1595044426077-d36d9236d54a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+  {
+    id: 3,
+    name: '無線滑鼠',
+    description: '靜音按鍵設計，長效電池',
+    price: 890,
+    image:
+      'https://images.unsplash.com/photo-1527814050087-3793815479db?q=80&w=1928&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+])
+</script>
