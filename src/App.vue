@@ -4,7 +4,7 @@
       <!-- 商品列表區 ProductList.vue -->
       <ProductList :products="products" />
       <!-- 購物車區 Cart.vue -->
-      <Cart />
+      <Cart :carts="carts" />
     </div>
 
     <!-- 通知元件 Notification.vue -->
@@ -19,6 +19,18 @@ import { RouterLink, RouterView } from 'vue-router'
 import ProductList from './components/ProductList.vue'
 import Cart from './components/Cart.vue'
 import Notification from './components/Notification.vue'
+
+const carts = ref([
+  {
+    id: 1,
+    name: '耳罩式藍牙耳機',
+    description: '舒適配戴，支援降噪技術',
+    price: 2490,
+    quantity: 1, //多了數量
+    image:
+      'https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=2065&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
+])
 
 const products = ref([
   {
