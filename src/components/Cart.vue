@@ -26,10 +26,12 @@
 <script setup>
 import { inject } from 'vue'
 
+const showNotification = inject('showNotification')
+
 const props = defineProps({
   carts: {
     type: Array,
-    require: true,
+    required: true,
   },
 })
 
@@ -37,10 +39,8 @@ const emit = defineEmits(['remove-cart'])
 
 const handleRemoveCart = (item) => {
   emit('remove-cart', item)
-  showNotification(`已移除${item.name}。`)
+  showNotification(`已移除${item.name}。`, 'danger')
 }
-
-const showNotification = inject('showNotification')
 </script>
 
 <style lang="scss" scoped></style>

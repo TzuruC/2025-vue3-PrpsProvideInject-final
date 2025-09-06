@@ -25,7 +25,7 @@ import { inject } from 'vue'
 const props = defineProps({
   products: {
     type: Array,
-    require: true,
+    required: true,
   },
 })
 
@@ -33,7 +33,7 @@ const emit = defineEmits(['add-cart'])
 
 const handleAddCart = (product) => {
   emit('add-cart', product)
-  showNotification(`已將 ${product.name} 加入購物車中！`)
+  showNotification(`已將 ${product.name} 加入購物車中！`, 'success')
 }
 
 const showNotification = inject('showNotification')

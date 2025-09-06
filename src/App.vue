@@ -80,17 +80,25 @@ const removeCart = (item) => {
   carts.value = carts.value.filter((c) => c.id !== item.id)
 }
 
+// const notificationState = reactive({
+//   id: new Date().getTime(),
+//   message: 'OK',
+//   isShow: false,
+// })
+
 const notificationState = reactive({
-  message: 'OK',
-  isShow: false,
+  toasts: [], // [{ id, message, type }]
 })
 
-const showNotification = (message) => {
-  notificationState.message = message
-  notificationState.isShow = true
+const showNotification = (message, type = 'success') => {
+  const id = Date.now()
+  notificationState.toasts.push({ id, message, isShow: true, type: type })
 
   setTimeout(() => {
-    notificationState.isShow = false
+    const index = notificationState.toasts.findIndex((t) => t.id === id)
+    if (index !== -1) {
+      notificationState.toasts.splice(index, 1)
+    }
   }, 1800)
 }
 
