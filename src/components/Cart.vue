@@ -1,6 +1,7 @@
 <template>
   <div class="col-md-4">
     <h2 class="mb-3">購物車</h2>
+    <div v-if="carts.length === 0">購物車是空的。</div>
     <ul class="list-group mb-3">
       <li
         class="list-group-item d-flex justify-content-between align-items-center"
@@ -13,7 +14,9 @@
         </div>
         <div>
           <span class="text-muted">${{ item.price }}</span>
-          <button class="btn btn-sm btn-outline-danger ms-2">移除</button>
+          <button class="btn btn-sm btn-outline-danger ms-2" @click="handleRemoveCart(item)">
+            移除
+          </button>
         </div>
       </li>
     </ul>
@@ -21,12 +24,23 @@
 </template>
 
 <script setup>
+import { inject } from 'vue'
+
 const props = defineProps({
   carts: {
     type: Array,
     require: true,
   },
 })
+
+const emit = defineEmits(['remove-cart'])
+
+const handleRemoveCart = (item) => {
+  emit('remove-cart', item)
+  showNotification(`已移除${item.name}。`)
+}
+
+const showNotification = inject('showNotification')
 </script>
 
 <style lang="scss" scoped></style>

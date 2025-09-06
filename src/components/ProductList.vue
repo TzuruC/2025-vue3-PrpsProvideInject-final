@@ -9,7 +9,9 @@
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text">{{ product.description }}</p>
             <p class="fw-bold text-primary">$ {{ product.price }}</p>
-            <button class="btn btn-success w-100">加入購物車</button>
+            <button class="btn btn-success w-100" @click="handleAddCart(product)">
+              加入購物車
+            </button>
           </div>
         </div>
       </div>
@@ -18,12 +20,23 @@
 </template>
 
 <script setup>
+import { inject } from 'vue'
+
 const props = defineProps({
   products: {
     type: Array,
     require: true,
   },
 })
+
+const emit = defineEmits(['add-cart'])
+
+const handleAddCart = (product) => {
+  emit('add-cart', product)
+  showNotification(`已將 ${product.name} 加入購物車中！`)
+}
+
+const showNotification = inject('showNotification')
 </script>
 
 <style lang="scss" scoped></style>

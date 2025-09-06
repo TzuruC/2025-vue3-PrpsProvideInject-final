@@ -2,9 +2,9 @@
   <div id="app" class="container py-4">
     <div class="row">
       <!-- 商品列表區 ProductList.vue -->
-      <ProductList :products="products" />
+      <ProductList :products="products" @add-cart="addCart" />
       <!-- 購物車區 Cart.vue -->
-      <Cart :carts="carts" />
+      <Cart :carts="carts" @remove-cart="removeCart" />
     </div>
 
     <!-- 通知元件 Notification.vue -->
@@ -14,23 +14,10 @@
 
 <style scoped></style>
 <script setup>
-import { ref } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
+import { ref, reactive, provide } from 'vue'
 import ProductList from './components/ProductList.vue'
 import Cart from './components/Cart.vue'
 import Notification from './components/Notification.vue'
-
-const carts = ref([
-  {
-    id: 1,
-    name: '耳罩式藍牙耳機',
-    description: '舒適配戴，支援降噪技術',
-    price: 2490,
-    quantity: 1, //多了數量
-    image:
-      'https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=2065&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-])
 
 const products = ref([
   {
@@ -74,4 +61,39 @@ const products = ref([
       'https://images.unsplash.com/photo-1527814050087-3793815479db?q=80&w=1928&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 ])
+
+const carts = ref([])
+
+const addCart = (product) => {
+  const existProduct = carts.value.find((c) => c.id === product.id)
+  if (existProduct) {
+    existProduct.quantity++
+  } else {
+    carts.value.push({
+      ...product,
+      quantity: 1,
+    })
+  }
+}
+
+const removeCart = (item) => {
+  carts.value = carts.value.filter((c) => c.id !== item.id)
+}
+
+const notificationState = reactive({
+  message: 'OK',
+  isShow: false,
+})
+
+const showNotification = (message) => {
+  notificationState.message = message
+  notificationState.isShow = true
+
+  setTimeout(() => {
+    notificationState.isShow = false
+  }, 1800)
+}
+
+provide('notificationState', notificationState)
+provide('showNotification', showNotification)
 </script>
